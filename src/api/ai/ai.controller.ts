@@ -15,7 +15,7 @@ export class AiController {
   constructor(private readonly aiService: AiService) {}
 
   @Post()
-  async getPost(@Body() data: any): Promise<string> {
+  async getPost(@Body() data: any): Promise<any> {
     return await this.aiService.callAI(data);
   }
 

@@ -10,7 +10,7 @@ export class AiService {
   }
   private openai;
 
-  async callAI(data: any): Promise<string> {
+  async callAI(data: any): Promise<any> {
     const response = await this.openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [{
@@ -71,11 +71,13 @@ export class AiService {
       message: messageText.trim(),
       itinerary,
       farewell: farewellText.trim(),
+      raw: "",
     };
 
     // 결과 출력
     console.log(parsedData);
-    return response.choices[0].message.content;
+    parsedData.raw = response.choices[0].message.content
+    return parsedData;
   }
 
 }
