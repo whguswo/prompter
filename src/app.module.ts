@@ -4,6 +4,7 @@ import { JwtExpireMiddleware, LoggerMiddleware } from './common/middlewares';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AiModule } from './api/ai/ai.module';
 
 ConfigModule.forRoot();
 
@@ -15,6 +16,7 @@ ConfigModule.forRoot();
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '30m' },
     }),
+    AiModule,
   ],
   controllers: [],
   providers: [AppService],
@@ -22,6 +24,6 @@ ConfigModule.forRoot();
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
-    consumer.apply(JwtExpireMiddleware).exclude('/auth/(.*)').forRoutes('*');
+    // consumer.apply(JwtExpireMiddleware).exclude('/auth/(.*)').forRoutes('*');
   }
 }
